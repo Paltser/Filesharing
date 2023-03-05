@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="HomePage.css">
+    <meta charset="UTF-8" />
+    <title>Cloudfrenzy</title>
+    <link
+            rel="stylesheet" href="HomePage.css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
+    />
 </head>
 <body>
-<div class="container">
-    <h1>FileShare</h1>
-    <a href="/registration.html" class="button">Make an account here</a>
-</div>
+<div id="app"></div>
+<script src="https://unpkg.com/vue@3.2.20/dist/vue.global.js"></script>
+<script>
+    const homeComponent = {
+        template: `
+          <div class="home">
+            <section class="hero is-dark">
+              <div class="hero-body">
+                <div class="container">
+                  <h1 class="title">Welcome to Cloudfrenzy</h1>
+                  <div class="button-block">
+                    <a href="http://localhost:3000/login" class="button">Sign up or log in here</a>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        `,
+        name: 'home',
+    };
+
+    const app = Vue.createApp(homeComponent);
+    app.mount('#app');
+</script>
 </body>
 </html>
