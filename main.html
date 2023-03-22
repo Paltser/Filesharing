@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Cloudfrenzy - Main</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"/>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://unpkg.com/vue@3.2.20/dist/vue.global.js"></script>
+<script>
+  const mainComponent = {
+    template: `
+          <div class="main">
+            <section class="hero is-primary">
+              <div class="hero-body">
+                <div class="container">
+                  <h1 class="title">Welcome to the Main View</h1>
+                  <div class="button-block">
+                    <a href="/logout" class="button is-danger">Log out</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="section">
+              <div class="container">
+                <p>This is the main view. You have full access to the application here.</p>
+              </div>
+            </section>
+          </div>
+        `,
+    name: 'main',
+  };
+
+  const app = Vue.createApp(mainComponent);
+  app.mount('#app');
+</script>
+</body>
+</html>

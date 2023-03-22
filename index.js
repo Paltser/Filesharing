@@ -5,10 +5,14 @@ const config = require('./config');
 const swaggerUi = require('swagger-ui-express');
 const yamlJs = require('yamljs');
 const swaggerDocument = yamlJs.load('./swagger.yaml');
+const path = require('path');
 
 require('dotenv').config();
 
 const port = process.env.PORT || 3000;
+
+// Get user profile information
+const { requiresAuth } = require('express-openid-connect');
 
 // Serve static files
 app.use(express.static('public'));
@@ -19,24 +23,6 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Middleware to parse JSON
 app.use(express.json());
 
-// Handle sign-up form submission
-/* app.post('/users', (req, res) => {
-    const { email, password, passwordConfirmation } = req.body;
-
-    if (!email || !password || !passwordConfirmation) {
-        return res.status(400).json({ message: 'Please provide all required fields' });
-    }
-
-    if (password !== passwordConfirmation) {
-        return res.status(400).json({ message: 'Passwords do not match' });
-    }
-
-    // Code to create a new user with the provided email and password would go here
-
-    res.status(200).json({ message: 'User created successfully' });
-});
-*/
-
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
@@ -45,8 +31,15 @@ app.get('/', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
-// Get user profile information
-const { requiresAuth } = require('express-openid-connect');
+// If authenticated, redirect to /main, otherwise, redirect to /login
+app.get('/main', (req, res) => {
+    if (req.oidc.isAuthenticated()) {
+        console.log("Success")
+        res.sendFile(path.join(__dirname, 'main.html'));
+    } else {
+        res.redirect('/login');
+    }
+});
 
 app.get('/profile', requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user));
