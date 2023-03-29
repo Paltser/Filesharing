@@ -32,9 +32,8 @@ app.get('/', (req, res) => {
 });
 
 // If authenticated, redirect to /main, otherwise, redirect to /login
-app.get('/main', (req, res) => {
+app.get('/main', requiresAuth(), (req, res) => {
     if (req.oidc.isAuthenticated()) {
-        console.log("Success")
         res.sendFile(path.join(__dirname, 'main.html'));
     } else {
         res.redirect('/login');
