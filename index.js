@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
-// If authenticated, redirect to /main, otherwise, redirect to /login
+// If authenticated, redirect to /main, otherwise redirect to /login
 app.get('/main', requiresAuth(), (req, res) => {
     if (req.oidc.isAuthenticated()) {
         res.sendFile(path.join(__dirname, 'main.html'));
